@@ -1,29 +1,20 @@
 package group40.whatrentsellerapp.service.mapping;
 
-import group40.whatrentsellerapp.domain.Category;
 import group40.whatrentsellerapp.domain.Product;
-import group40.whatrentsellerapp.domain.Seller;
-import group40.whatrentsellerapp.dto.categoryDto.CategoryAllParamDto;
 import group40.whatrentsellerapp.dto.productDto.ProductRequestDto;
 import group40.whatrentsellerapp.dto.productDto.ProductResponseDto;
-import group40.whatrentsellerapp.exception_handling.exceptions.NotFoundException;
-import group40.whatrentsellerapp.repository.ISellerRepository;
 import group40.whatrentsellerapp.service.interfaces.categoryServiceInterface.IFindCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import group40.whatrentsellerapp.service.interfaces.sellerServiceInterface.IFindSellerService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ProductConverter {
-    @Autowired
-    private IFindCategoryService categoryService;
-    @Autowired
-    private CategoryConverter categoryConverter;
 
-    @Autowired
-    private ISellerRepository sellerRepository;
+    private final IFindCategoryService findCategoryService;
+    private final IFindSellerService findSellerService;
 
     public Product convertFromDto(ProductRequestDto dto) {
         Product product = new Product();
@@ -47,17 +38,10 @@ public class ProductConverter {
             product.setIsOnStock(dto.getIsOnStock());
         }
         if (dto.getSellerId() !=null) {
-            Optional<Seller> sellerOpt = sellerRepository.findById(dto.getSellerId());
-            sellerOpt.ifPresent(product::setSeller);
+            product.setSeller(findSellerService.findSellerByIdForCreateProduct(dto.getSellerId()));
         }
         if (dto.getProductCategoryId() != null) {
-            ResponseEntity<CategoryAllParamDto> response = categoryService.findAllParamById(dto.getProductCategoryId());
-            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                Category category = categoryConverter.convertFromDtoWithAllParam(response.getBody());
-                product.setCategory(category);
-            } else {
-                throw new NotFoundException("Category not found with id = " + dto.getProductCategoryId());
-            }
+            product.setCategory(findCategoryService.findCategoryByIdForCreateProduct(dto.getProductCategoryId()));
         }
         return product;
     }

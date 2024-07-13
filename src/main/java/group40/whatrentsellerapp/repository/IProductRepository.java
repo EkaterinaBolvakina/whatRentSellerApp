@@ -1,6 +1,8 @@
 package group40.whatrentsellerapp.repository;
 
+import group40.whatrentsellerapp.domain.Category;
 import group40.whatrentsellerapp.domain.Product;
+import group40.whatrentsellerapp.domain.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,22 +14,25 @@ import java.util.stream.Collectors;
 
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
-    public List<Product> findAllByNameContains(String name);
-    public List<Product> findAllByDescriptionContains(String description);
-    public List<Product> findAllByPriceEquals(Double price);
-    public List<Product> findAllByQuantityEquals(Integer quantity);
+    List<Product> findAllByNameContains(String name);
+    List<Product> findAllByDescriptionContains(String description);
+    List<Product> findAllByPriceEquals(Double price);
+    List<Product> findAllByQuantityEquals(Integer quantity);
+    List<Product> findAllByCategory(Category category);
+    List<Product> findAllBySeller(Seller seller);
+
 
     @Query("SELECT t FROM Product t WHERE t.price BETWEEN :priceMin AND :priceMax")
-    public List<Product> findAllByPriceGreaterThanAndPriceLessThan(@Param("priceMin") Double priceMin, @Param("priceMax") Double priceMax);
+    List<Product> findAllByPriceGreaterThanAndPriceLessThan(@Param("priceMin") Double priceMin, @Param("priceMax") Double priceMax);
 
     @Query("SELECT t FROM Product t WHERE t.price BETWEEN :priceMin AND :priceMax")
-    public List<Product> findAllByPriceBetween(@Param("priceMin") Double priceMin, @Param("priceMax") Double priceMax);
+    List<Product> findAllByPriceBetween(@Param("priceMin") Double priceMin, @Param("priceMax") Double priceMax);
 
-    public List<Product> findAllByPriceLessThan(Double price1);
-    public List<Product> findAllByPriceGreaterThan(Double price1);
+    List<Product> findAllByPriceLessThan(Double price1);
+    List<Product> findAllByPriceGreaterThan(Double price1);
 
     @Query("SELECT t FROM Product t WHERE t.quantity BETWEEN :quantityMin AND :quantityMax")
-    public List<Product> findAllByQuantityBetween(@Param("quantityMin") Integer quantityMin, @Param("quantityMax") Integer quantityMax);
+    List<Product> findAllByQuantityBetween(@Param("quantityMin") Integer quantityMin, @Param("quantityMax") Integer quantityMax);
 
     default Map<String,Product> findProductByWithLongNames(Integer minLength){
         return findAll().stream()

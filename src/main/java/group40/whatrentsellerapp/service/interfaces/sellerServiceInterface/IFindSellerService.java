@@ -1,8 +1,7 @@
 package group40.whatrentsellerapp.service.interfaces.sellerServiceInterface;
 
 
-import group40.whatrentsellerapp.dto.categoryDto.CategoryAllParamDto;
-import group40.whatrentsellerapp.dto.categoryDto.CategoryResponseDto;
+import group40.whatrentsellerapp.domain.Seller;
 import group40.whatrentsellerapp.dto.sellerDto.SellerResponseDto;
 import org.springframework.http.ResponseEntity;
 
@@ -16,5 +15,8 @@ public interface IFindSellerService {
     ResponseEntity<SellerResponseDto> findBySellerName(String sellerName);
 
     ResponseEntity<SellerResponseDto> findBySellerEmail(String sellerEmail);
+
+    Seller findSellerByIdForCreateProduct(Long id);
+    Seller findSellerByNameForCreateProduct(String sellerName);
 
 }
