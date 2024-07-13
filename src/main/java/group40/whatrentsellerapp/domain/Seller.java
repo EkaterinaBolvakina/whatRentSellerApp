@@ -44,9 +44,9 @@ public class Seller {
     @Column(name = "seller_rating")
     private Double rating;
 
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<Product> products;
+    //@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    //@ToString.Exclude
+    //private List<Product> products;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")

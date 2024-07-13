@@ -28,7 +28,7 @@ public class AddSellerService implements IAddSellerService {
 
     @Override
     public ResponseEntity<SellerCreateResponseDto> addSeller(SellerCreateRequestDto sellerCreateRequestDto) {
-        if (sellerRepository.findBySellerEmail(sellerCreateRequestDto.getEmail()).isEmpty()) {
+        if (sellerRepository.findByEmail(sellerCreateRequestDto.getEmail()).isEmpty()) {
             Seller newSeller = sellerConverter.convertFromCreateDto(sellerCreateRequestDto);
             Optional<Role> defaultRole = roleRepository.findByName("SELLER");
 

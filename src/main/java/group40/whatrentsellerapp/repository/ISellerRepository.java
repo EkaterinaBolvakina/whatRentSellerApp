@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface ISellerRepository extends JpaRepository<Seller, Long> {
-    Optional<Seller> findBySellerId(Long sellerId);
+    Optional<Seller> findById(Long id);
     Optional<Seller> findBySellerName(String sellerName);
-    Optional<Seller> findBySellerEmail(String sellerEmail);
+    Optional<Seller> findByEmail(String sellerEmail);
 
     @Modifying
     @Query("UPDATE Seller s SET s.password = :password WHERE s.email = :email")

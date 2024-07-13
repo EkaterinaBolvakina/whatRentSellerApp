@@ -36,7 +36,7 @@ public class FindSellerService implements IFindSellerService {
 
     @Override
     public ResponseEntity<SellerResponseDto> findById(Long id) {
-        Optional<Seller> foundedSellerOptional = sellerRepository.findBySellerId(id);
+        Optional<Seller> foundedSellerOptional = sellerRepository.findById(id);
 
         if (foundedSellerOptional.isPresent()) {
             SellerResponseDto foundedSellerDto = sellerConverter.convertToDto(foundedSellerOptional.get());
@@ -60,7 +60,7 @@ public class FindSellerService implements IFindSellerService {
 
     @Override
     public ResponseEntity<SellerResponseDto> findBySellerEmail(String sellerEmail) {
-        Optional<Seller> foundedSellerOptional = sellerRepository.findBySellerEmail(sellerEmail);
+        Optional<Seller> foundedSellerOptional = sellerRepository.findByEmail(sellerEmail);
 
         if (foundedSellerOptional.isPresent()) {
             SellerResponseDto foundedSellerDto = sellerConverter.convertToDto(foundedSellerOptional.get());
@@ -72,7 +72,7 @@ public class FindSellerService implements IFindSellerService {
 
     @Override
     public Seller findSellerByIdForCreateProduct(Long id) {
-        Optional<Seller> foundedSellerOptional = sellerRepository.findBySellerId(id);
+        Optional<Seller> foundedSellerOptional = sellerRepository.findById(id);
 
         if (foundedSellerOptional.isPresent()) {
             return foundedSellerOptional.get();

@@ -20,9 +20,9 @@ public class UpdateSellerService implements IUpdateSellerService {
     @Override
     public ResponseEntity<SellerCreateResponseDto> updateSellerPasswordByEmail(String newPassword, String email) {
 
-        if (sellerRepository.findBySellerEmail(email).isPresent()) {
+        if (sellerRepository.findByEmail(email).isPresent()) {
             sellerRepository.updateSellerPasswordByEmail(newPassword, email);
-            Seller updatedSeller = sellerRepository.findBySellerEmail(email).get();
+            Seller updatedSeller = sellerRepository.findByEmail(email).get();
             SellerCreateResponseDto dto = sellerConverter.convertToCreateDto(updatedSeller);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } else {
@@ -32,9 +32,9 @@ public class UpdateSellerService implements IUpdateSellerService {
 
     @Override
     public ResponseEntity<SellerCreateResponseDto> updateSellerNameByEmail(String newSellerName, String email) {
-        if (sellerRepository.findBySellerEmail(email).isPresent()) {
+        if (sellerRepository.findByEmail(email).isPresent()) {
             sellerRepository.updateSellerNameByEmail(newSellerName, email);
-            Seller updatedSeller = sellerRepository.findBySellerEmail(email).get();
+            Seller updatedSeller = sellerRepository.findByEmail(email).get();
             SellerCreateResponseDto dto = sellerConverter.convertToCreateDto(updatedSeller);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } else {

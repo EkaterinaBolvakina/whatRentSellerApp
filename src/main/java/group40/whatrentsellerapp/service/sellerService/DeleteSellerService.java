@@ -16,8 +16,8 @@ public class DeleteSellerService implements IDeleteSellerService {
     @Override
     public ResponseEntity<Void> deleteSellerByEmail(String sellerEmail) {
 
-        if (sellerRepository.findBySellerEmail(sellerEmail).isPresent()) {
-            sellerRepository.delete(sellerRepository.findBySellerEmail(sellerEmail).get());
+        if (sellerRepository.findByEmail(sellerEmail).isPresent()) {
+            sellerRepository.delete(sellerRepository.findByEmail(sellerEmail).get());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             throw new NotFoundException("Seller with email = " + sellerEmail + " not found");
