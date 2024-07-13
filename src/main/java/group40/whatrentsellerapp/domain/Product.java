@@ -19,7 +19,6 @@ public class Product {
 
     @Column(name="product_name")
     @NotBlank(message = "Product name must be not blank")
-    @NotNull(message = "Product name must be not null")
     @Size(min=3, max=25, message = "Product name length must be between 3 and 25 characters")
     private String name;
 
@@ -29,11 +28,11 @@ public class Product {
     private String description;
 
     @Column(name="product_price")
-    @NotBlank(message = "Product price must be not blank")
+    @NotNull(message = "Product price must be not null")
     private Double price;
 
     @Column(name="product_quantity")
-    @NotBlank(message = "Product quantity must be not blank")
+    @NotNull(message = "Product quantity must be not null")
     private Integer quantity;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -46,7 +45,7 @@ public class Product {
     private Seller seller;
 
     @Column(name="is_on_stock")
-    @NotBlank(message = "Product onStock must be not blank")
+    @NotNull(message = "Product onStock must be not null")
     private Boolean isOnStock;
 
     public Product(String name, String description, Double price, Integer quantity, Category category, Seller seller, Boolean isOnStock) {
