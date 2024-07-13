@@ -1,6 +1,7 @@
 package group40.whatrentsellerapp.service.categoryService;
 
 import group40.whatrentsellerapp.domain.Category;
+import group40.whatrentsellerapp.dto.categoryDto.CategoryAllParamDto;
 import group40.whatrentsellerapp.dto.categoryDto.CategoryResponseDto;
 import group40.whatrentsellerapp.exception_handling.exceptions.IsEmptyException;
 import group40.whatrentsellerapp.exception_handling.exceptions.NotFoundException;
@@ -55,6 +56,18 @@ public class FindCategoryService implements IFindCategoryService {
             return new ResponseEntity<>(foundedCategoryDto, HttpStatus.OK);
         } else {
             throw new NotFoundException("Category with name '" + categoryName + "' not found");
+        }
+    }
+
+    @Override
+    public ResponseEntity<CategoryAllParamDto> findAllParamById(Long id) {
+        Optional<Category> foundedCategoryOptional = categoryRepository.findById(id);
+
+        if (foundedCategoryOptional.isPresent()) {
+            CategoryAllParamDto foundedCategoryDto = categoryConverter.convertToDtoWithAllParam(foundedCategoryOptional.get());
+            return new ResponseEntity<>(foundedCategoryDto, HttpStatus.OK);
+        } else {
+            throw new NotFoundException("Category with id = " + id + " not found");
         }
     }
 }

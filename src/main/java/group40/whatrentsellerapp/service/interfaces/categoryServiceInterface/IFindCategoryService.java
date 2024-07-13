@@ -1,6 +1,7 @@
 package group40.whatrentsellerapp.service.interfaces.categoryServiceInterface;
 
 
+import group40.whatrentsellerapp.dto.categoryDto.CategoryAllParamDto;
 import group40.whatrentsellerapp.dto.categoryDto.CategoryResponseDto;
 import org.springframework.http.ResponseEntity;
 
@@ -12,4 +13,5 @@ public interface IFindCategoryService {
     ResponseEntity<CategoryResponseDto> findById(Long id);
 
     ResponseEntity<CategoryResponseDto> findByName(String categoryName);
+    ResponseEntity<CategoryAllParamDto> findAllParamById(Long id);
 }
