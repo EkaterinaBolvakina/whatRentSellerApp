@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- добавляем описание наших изменений -->
+    <!-- Erstellung der Tabelle 'role' -->
+    <changeSet id="create.table.role" author="author1">
+        <createTable tableName="role">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Erstellung der Tabelle 'category' -->
+    <changeSet id="create.table.category" author="author1">
+        <createTable tableName="category">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category_name" type="VARCHAR(35)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Erstellung der Tabelle 'seller' -->
+    <changeSet id="create.table.seller" author="author1">
+        <createTable tableName="seller">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="seller_name" type="VARCHAR (255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seller_password" type="VARCHAR (255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR (255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seller_business_name" type="VARCHAR (255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR (255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR (255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seller_rating" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="seller" baseColumnNames="role_id" constraintName="fk_seller_role_id"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+    <!-- Erstellung der Tabelle 'product' -->
+    <changeSet id="create.table.product" author="author1">
+        <createTable tableName="product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+
+            <column name="product_name" type="VARCHAR (255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="product_description" type="VARCHAR (255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="product_price" type="DOUBLE">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="product_quantity" type="INT">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="seller_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_on_stock" type="TINYINT(1)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="product" baseColumnNames="category_id" constraintName="fk_product_category_id"
+                                 referencedTableName="category"
+                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="product" baseColumnNames="seller_id" constraintName="fk_product_seller_id"
+                                 referencedTableName="seller"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+    <!--    внесем новые изменения в базу   -->
+    <!-- Einfügen von Standarddaten in 'role' -->
+    <changeSet id="insert.default.roles" author="author1">
+        <insert tableName="role">
+            <column name="role_name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="role">
+            <column name="role_name" value="ROLE_SELLER"/>
+        </insert>
+    </changeSet>
+
+    <!-- Einfügen von Standarddaten in 'category' -->
+    <changeSet id="insert.default.categories" author="author1">
+        <insert tableName="category">
+            <column name="category_name" value="CATEGORY 1"></column>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="CATEGORY 2"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="CATEGORY 3"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="CATEGORY 4"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="CATEGORY 5"/>
+        </insert>
+    </changeSet>
+
+    <!-- Einfügen von Standarddaten in 'seller' -->
+    <changeSet id="insert.default.sellers" author="author1">
+        <insert tableName="seller">
+            <column name="seller_name" value="seller1"/>
+            <column name="seller_password" value="password1"/>
+            <column name="email" value="seller1@example.com"/>
+            <column name="seller_business_name" value="Business1"/>
+            <column name="first_name" value="First1"/>
+            <column name="last_name" value="Last1"/>
+            <column name="seller_rating" value="4.5"/>
+            <column name="role_id" value="2"/>
+        </insert>
+        <insert tableName="seller">
+            <column name="seller_name" value="seller2"/>
+            <column name="seller_password" value="password2"/>
+            <column name="email" value="seller2@example.com"/>
+            <column name="seller_business_name" value="Business2"/>
+            <column name="first_name" value="First2"/>
+            <column name="last_name" value="Last2"/>
+            <column name="seller_rating" value="4.0"/>
+            <column name="role_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <!-- Einfügen von Standarddaten in 'product' -->
+    <changeSet id="insert.default.products" author="author1">
+        <insert tableName="product">
+            <column name="product_name" value="Product1"></column>
+            <column name="product_description" value="Product1 description"/>
+            <column name="product_price" value="99.99"/>
+            <column name="product_quantity" value="3"/>
+            <column name="category_id" value="1"/>
+            <column name="seller_id" value="2"/>
+            <column name="is_on_stock" value="1"/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="product_name" value="Product2"></column>
+            <column name="product_description" value="Product2 description"/>
+            <column name="product_price" value="25.99"/>
+            <column name="product_quantity" value="1"/>
+            <column name="category_id" value="1"/>
+            <column name="seller_id" value="1"/>
+            <column name="is_on_stock" value="1"/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="product_name" value="Product3"></column>
+            <column name="product_description" value="Product3 description"/>
+            <column name="product_price" value="33"/>
+            <column name="product_quantity" value="10"/>
+            <column name="category_id" value="3"/>
+            <column name="seller_id" value="2"/>
+            <column name="is_on_stock" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

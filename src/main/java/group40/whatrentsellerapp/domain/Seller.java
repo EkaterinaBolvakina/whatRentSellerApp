@@ -25,8 +25,9 @@ public class Seller {
     @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Seller name can contain only latin character and digital")
     private String sellerName;
 
-    @NotBlank(message = "Seller passwort must be not blank")
+    @NotBlank(message = "Seller password must be not blank")
     @Size(min = 7, max = 15, message = "Password length must be between 7 and 15 characters")
+    @Column(name = "seller_password", nullable = false)
     private String password;
 
     @Email(message = "Invalid email format")
@@ -44,9 +45,9 @@ public class Seller {
     @Column(name = "seller_rating")
     private Double rating;
 
-    //@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
-    //@ToString.Exclude
-    //private List<Product> products;
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Product> products;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
